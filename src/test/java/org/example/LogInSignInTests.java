@@ -1,6 +1,6 @@
 package org.example;
 
-import io.cucumber.java.AfterAll;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
 import org.junit.jupiter.api.Assertions;
@@ -23,13 +23,13 @@ public class LogInSignInTests {
         logInAndSignInPage = new LogInAndSignInPage(webDriver, logInSignInUrl);
     }
 
-    @AfterAll
+    @After
     public static void closeAndQuit() {
         webDriver.quit();
         //webDriver.quit();
     }
 
-    @Given("the browser is open on  the login page")
+    @Given("the browser is open on the login page")
     public void the_browser_is_open_on_the_login_page() {
         Assertions.assertTrue(logInAndSignInPage.isBrowserOpen(), "The browser is not open!");
     }
@@ -41,5 +41,10 @@ public class LogInSignInTests {
     @Then("the log in fails")
     public void the_log_in_fails() {
         Assertions.assertTrue(logInAndSignInPage.isErrorRegistered(), "No error was registered after the login attempt.");
+    }
+
+    @Then("the log in is successful")
+    public void the_log_in_is_successful() {
+        Assertions.assertTrue(!logInAndSignInPage.isErrorRegistered(), "Error was registered and the login failed.");
     }
 }
